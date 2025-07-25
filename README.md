@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Promotion Rule Evaluation Engine
 
 A lightweight, extensible rule engine built with Node.js to evaluate dynamic player-specific promotions based on YAML-configured rules. It supports A/B testing, expiration, priority-based resolution, and weighted randomness.
@@ -200,4 +199,3 @@ node index.js
   "rulesCount": 20
 }
 ```
->>>>>>> c00d69e1781d1dd7a7bcc9d03ad76ec3331d6248
