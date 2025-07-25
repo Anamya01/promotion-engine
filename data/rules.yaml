@@ -1,0 +1,330 @@
+rules:
+  # 1. Loyal low spender
+  - id: "promo_loyal_low_spender"
+    priority: 1
+    conditions:
+      country: "==IN"
+      playerLevel: ">=15"
+      spendTier: "==low"
+      daysSinceLastPurchase: "<=3"
+    metadata:
+      weight: 80
+      abGroup: "A"
+      validUntil: "2025-12-31"
+    promotion:
+      id: 201
+      title: "Loyal Player Bonus"
+      description: "100 Free Spins + 2X XP for loyal users"
+      reward: 
+        type: "spins"
+        amount: 100
+
+  # 2. Lost user
+  - id: "promo_lost_user"
+    priority: 2
+    conditions:
+      daysSinceLastPurchase: ">60"
+      hasActiveBonus: "==false"
+    metadata:
+      weight: 100
+      abGroup: "B"
+      validUntil: "2026-01-31"
+    promotion:
+      id: 202
+      title: "We Miss You Bonus"
+      description: "₹200 Cashback for returning players"
+      reward:
+        type: "cashback"
+        amount: 200
+
+  # 3. High spender VIP
+  - id: "promo_high_spender_vip"
+    priority: 3
+    conditions:
+      spendTier: "==high"
+      isPremiumUser: "==true"
+    metadata:
+      weight: 60
+      abGroup: "A"
+      validUntil: "2025-08-31"
+    promotion:
+      id: 203
+      title: "High Roller VIP Pack"
+      description: "500 Gems + Exclusive VIP Badge"
+      reward:
+        type: "gems"
+        amount: 500
+
+  # 4. New user boost
+  - id: "promo_new_user_boost"
+    priority: 4
+    conditions:
+      playerLevel: "<=3"
+      hasActiveBonus: "==false"
+    metadata:
+      weight: 100
+      abGroup: "A"
+    promotion:
+      id: 204
+      title: "New Player Starter Pack"
+      description: "100 Coins + Tutorial Boost"
+      reward:
+        type: "coins"
+        amount: 100
+
+  # 5. Weekend special
+  - id: "promo_weekend_special"
+    priority: 5
+    conditions:
+      country: "==US"
+      isWeekend: "==true"
+    metadata:
+      weight: 50
+      abGroup: "A"
+      validUntil: "2025-09-01"
+    promotion:
+      id: 205
+      title: "Weekend Bonus"
+      description: "50 Spins Only This Weekend!"
+      reward:
+        type: "spins"
+        amount: 50
+
+  # 6–7. Same priority, different weights
+  - id: "promo_equal_priority_1"
+    priority: 6
+    conditions:
+      playerLevel: ">=10"
+    metadata:
+      weight: 70
+      abGroup: "A"
+    promotion:
+      id: 206
+      title: "Equal Priority Offer A"
+      description: "Bonus A for testing equal priority"
+      reward:
+        type: "coins"
+        amount: 150
+
+  - id: "promo_equal_priority_2"
+    priority: 6
+    conditions:
+      playerLevel: ">=10"
+    metadata:
+      weight: 30
+      abGroup: "A"
+    promotion:
+      id: 207
+      title: "Equal Priority Offer B"
+      description: "Bonus B for testing equal priority"
+      reward:
+        type: "coins"
+        amount: 300
+
+  # 8. Expired rule
+  - id: "promo_expired_offer"
+    priority: 1
+    conditions:
+      country: "==IN"
+    metadata:
+      validUntil: "2020-01-01"
+      abGroup: "A"
+    promotion:
+      id: 208
+      title: "Expired Offer"
+      description: "This should never match"
+      reward:
+        type: "cashback"
+        amount: 50
+
+  # 9. No metadata
+  - id: "promo_no_metadata"
+    priority: 7
+    conditions:
+      country: "==IN"
+      spendTier: "==low"
+    promotion:
+      id: 209
+      title: "No Metadata Offer"
+      description: "Test rule with missing metadata"
+      reward:
+        type: "gems"
+        amount: 100
+
+  # 10. Conflicting rule (same priority as another)
+  - id: "promo_conflict_test"
+    priority: 3
+    conditions:
+      playerLevel: ">=10"
+      spendTier: "==medium"
+    metadata:
+      weight: 100
+      abGroup: "A"
+    promotion:
+      id: 210
+      title: "Conflict Test Offer"
+      description: "To test conflicting rule selection"
+      reward:
+        type: "spins"
+        amount: 25
+
+  # 11. No priority defined
+  - id: "promo_no_priority"
+    conditions:
+      isPremiumUser: "==true"
+    metadata:
+      weight: 100
+      abGroup: "A"
+    promotion:
+      id: 211
+      title: "No Priority Offer"
+      description: "Rule without a priority, should default to 999"
+      reward:
+        type: "coins"
+        amount: 500
+
+  # 12. Zero weight
+  - id: "promo_zero_weight"
+    priority: 4
+    conditions:
+      playerLevel: "<=5"
+    metadata:
+      weight: 0
+      abGroup: "B"
+    promotion:
+      id: 212
+      title: "Zero Weight Test"
+      description: "This should never be picked in weighted random"
+      reward:
+        type: "gems"
+        amount: 100
+
+  # 13. Minimal user
+  - id: "promo_basic_match"
+    priority: 5
+    conditions:
+      playerLevel: ">=1"
+    metadata:
+      weight: 50
+      abGroup: "A"
+    promotion:
+      id: 213
+      title: "Generic Welcome Pack"
+      description: "Covers very broad player base"
+      reward:
+        type: "coins"
+        amount: 50
+
+  # 14. Late spender
+  - id: "promo_late_spender"
+    priority: 4
+    conditions:
+      daysSinceLastPurchase: ">=10"
+    metadata:
+      weight: 70
+      abGroup: "B"
+    promotion:
+      id: 214
+      title: "Late Spender Bonus"
+      description: "Reactivate with 20 Gems"
+      reward:
+        type: "gems"
+        amount: 20
+
+  # 15. Female exclusive (hypothetical field)
+  - id: "promo_female_players"
+    priority: 2
+    conditions:
+      gender: "==female"
+    metadata:
+      weight: 90
+      abGroup: "A"
+    promotion:
+      id: 215
+      title: "Ladies Week Bonus"
+      description: "Special pack for women players"
+      reward:
+        type: "spins"
+        amount: 75
+
+  # 16. Country + level + premium combo
+  - id: "promo_combo_1"
+    priority: 2
+    conditions:
+      country: "==US"
+      playerLevel: ">=20"
+      isPremiumUser: "==true"
+    metadata:
+      weight: 85
+      abGroup: "B"
+    promotion:
+      id: 216
+      title: "Pro Player Bundle"
+      description: "For top-tier US premium users"
+      reward:
+        type: "gems"
+        amount: 150
+
+  # 17. Weekend India Offer
+  - id: "promo_weekend_india"
+    priority: 3
+    conditions:
+      country: "==IN"
+      isWeekend: "==true"
+    metadata:
+      weight: 50
+      abGroup: "A"
+    promotion:
+      id: 217
+      title: "Weekend India Bonus"
+      description: "50 Coins for logging in on weekends"
+      reward:
+        type: "coins"
+        amount: 50
+
+  # 18. Frequent buyer
+  - id: "promo_frequent_buyer"
+    priority: 1
+    conditions:
+      daysSinceLastPurchase: "<=1"
+    metadata:
+      weight: 90
+      abGroup: "A"
+    promotion:
+      id: 218
+      title: "Daily Purchase Bonus"
+      description: "Keep buying, keep earning!"
+      reward:
+        type: "cashback"
+        amount: 30
+
+  # 19. Basic premium
+  - id: "promo_premium_entry"
+    priority: 4
+    conditions:
+      isPremiumUser: "==true"
+    metadata:
+      weight: 100
+      abGroup: "B"
+    promotion:
+      id: 219
+      title: "Premium Welcome Pack"
+      description: "For new premium users"
+      reward:
+        type: "spins"
+        amount: 120
+
+  # 20. No conditions at all
+  - id: "promo_no_conditions"
+    priority: 8
+    conditions: {}
+    metadata:
+      weight: 10
+      abGroup: "A"
+    promotion:
+      id: 220
+      title: "Default Fallback"
+      description: "Should apply only if no other rule matches"
+      reward:
+        type: "coins"
+        amount: 10

@@ -1,0 +1,33 @@
+﻿Reflection & Rationale
+
+
+
+Approach
+* Implemented a rule evaluation engine using Node.js that selects the most relevant promotion for a player based on a set of YAML-defined rules.
+
+* Each rule includes metadata such as priority, weight, validUntil, and abGroup for flexible control.
+
+* Rules are filtered using A/B group assignment, validity date, and condition evaluation against incoming player data.
+
+* Among eligible rules, the one with the highest priority is selected. If multiple rules have the same priority, weighted randomness is used for fair selection.
+
+* A /metrics endpoint tracks total evaluations, hits, misses, and average latency.
+Design Decisions
+   * Used condition format like "operator+value" (e.g., ">=18") instead of separating operator and value. This simplified YAML structure and reduced verbosity while allowing straightforward parsing.
+
+   * Assigned A/B groups deterministically using a hash of playerId to maintain consistency.
+
+   * Evaluated rules in order of priority and only applied weight-based randomness when rules had equal priority.
+Trade-offs / Omissions
+      * Did not implement explicit conflicting rule detection, as such cases are already resolved through our priority system or via weighted randomness when priorities match. Adding an explicit check would have added unnecessary complexity and performance overhead.
+
+      * Did not separate condition operator and value fields in YAML, as it would make the rule configuration more verbose and harder to manage.
+
+      * Skipped unused placeholders like isWeekend condition evaluation and focused only on what's explicitly needed.
+
+AI Assistance
+         * ChatGPT was used for debugging, improving test coverage, and generating edge-case YAML entries.
+         * Used ChatGPT to clarify the requirements in the given document, especially around abstract areas like rule resolution order, A/B bucket logic, and weighted selection.
+         * GPT assisted in generating a diverse and comprehensive YAML rule set to simulate edge cases such as conflicting rules, overlapping priorities, and expired rules, ensuring robust logic coverage
+         * Assisted in generating boilerplate code for modules like rule parsing and validation. This accelerated setup and allowed more focus on core logic.
+         * Used to generate sample POST requests, test data, and simulate API responses for quicker testing with Postman and ensure API behavior was intuitive.

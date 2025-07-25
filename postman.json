@@ -1,0 +1,53 @@
+{
+	"info": {
+		"_postman_id": "9dc9e448-6821-4c43-95f4-394552826e30",
+		"name": "promotion-engine",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "47058282",
+		"_collection_link": "https://spacecraft-geoscientist-45394268-8821365.postman.co/workspace/Anamya-vats's-Workspace~586de238-c15f-4750-8d47-abebd9de35cb/collection/47058282-9dc9e448-6821-4c43-95f4-394552826e30?action=share&source=collection_link&creator=47058282"
+	},
+	"item": [
+		{
+			"name": "Metrics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/api/metrics"
+			},
+			"response": []
+		},
+		{
+			"name": "Hot Reload",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/api/reload"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Promotions",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"playerId\": \"new_player\",\n  \"playerLevel\": 20,\n  \"spendTier\": \"low\",\n  \"country\": \"IN\",\n  \"daysSinceLastPurchase\": 2,\n  \"hasActiveBonus\": false,\n  \"isPremiumUser\": false\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/api/promotion/"
+			},
+			"response": []
+		}
+	]
+}
